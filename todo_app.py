@@ -34,13 +34,13 @@ def delete_task(task_list, task_name):
     return task_list
 
 
-def mark_one_done(task_list, task_name):
+def toggle_task_done(task_list, task_name):
     task = get_task(task_list, task_name)
 
     if task is None:
         raise ValueError(f'The task {task_name} does not exist.')
 
-    task['is_done'] = True
+    task['is_done'] = True if not task['is_done'] else False
 
     return task_list
 
@@ -54,6 +54,7 @@ print(task_instance(add_task, task={'name': 'get some rest', 'is_done': False}))
 
 print(task_instance(delete_task, task_name='examination pending'))
 
-print(task_instance(mark_one_done, task_name='get some rest'))
+print(task_instance(toggle_task_done, task_name='get some rest'))
+print(task_instance(toggle_task_done, task_name='get some rest'))
 
 
