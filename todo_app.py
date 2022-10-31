@@ -1,10 +1,21 @@
 def todo():
     task_list = []
 
-    def inner(fn, task):
-        return fn(task_list, task)
+    def inner(fn, **kwargs):
+        return fn(task_list, **kwargs)
 
     return inner
+
+
+def get_task(task_list, task_name):
+    task = None
+
+    for task_instance_ in task_list:
+        if task_instance_['name'] == task_name:
+            task = task_instance_
+            break
+
+    return task
 
 
 def add_task(task_list, task):
@@ -12,8 +23,23 @@ def add_task(task_list, task):
     return task_list
 
 
+def delete_task(task_list, task_name):
+    task = get_task(task_list, task_name)
+
+    if task is None:
+        raise ValueError(f'The task {task_name} does not exist.')
+
+    task_list.remove(task)
+
+    return task_list
+
+
 task_instance = todo()
 
-print(task_instance(add_task, 'write paper'))
-print(task_instance(add_task, 'prepare lecture'))
-print(task_instance(add_task, 'examination pending'))
+print(task_instance(add_task, task={'name': 'write paper', 'is_done': False}))
+print(task_instance(add_task, task={'name': 'prepare lecture', 'is_done': False}))
+print(task_instance(add_task, task={'name': 'examination pending', 'is_done': False}))
+
+print(task_instance(delete_task, task_name='examination pending'))
+
+
