@@ -1,19 +1,21 @@
 def todo():
     task_list = []
 
-    def inner(fn, **kwargs):
-        result = fn(task_list, **kwargs)
-        counter = 0
-        for task_instance_ in task_list:
-            if not task_instance_['is_done']:
-                counter += 1
-        if counter == 1:
-            print(f'You have 1 task to do.')
-        elif counter == 0:
-            print('You have no tasks at this moment.')
-        else:
-            print(f'You have {counter} tasks to do.')
-        return result
+    def inner(fn=None, **kwargs):
+        result = None
+        if fn:
+            result = fn(task_list, **kwargs)
+            counter = 0
+            for task_instance_ in task_list:
+                if not task_instance_['is_done']:
+                    counter += 1
+            if counter == 1:
+                print(f'You have 1 task to do.')
+            elif counter == 0:
+                print('You have no tasks at this moment.')
+            else:
+                print(f'You have {counter} tasks to do.')
+        return result if fn else print(task_list)
 
     return inner
 
@@ -86,18 +88,35 @@ def mark_all_as_done(task_list):
     return task_list
 
 
+def clearing_done_tasks(task_list):
+    for task_instance_ in task_list:
+        if task_instance_['is_done']:
+            task_list.remove(task_instance_)
+
+    print('You have deleted all completed tasks.')
+
+    return task_list
+
+
 task_instance = todo()
 
-task_instance(add_task, task={'name': 'write paper', 'is_done': False})
-task_instance(add_task, task={'name': 'prepare lecture', 'is_done': False})
-task_instance(add_task, task={'name': 'examination pending', 'is_done': False})
-task_instance(add_task, task={'name': 'get some rest', 'is_done': True})
 
-task_instance(delete_task, task_name='examination pending')
 
-# print(task_instance(toggle_task_done, task_name='get some rest'))
-# print(task_instance(toggle_task_done, task_name='get some rest'))
-
-task_instance(filter_active_tasks)
-task_instance(filter_completed_tasks)
-# task_instance(mark_all_as_done)
+# # example data
+# task_instance(add_task, task={'name': 'write paper', 'is_done': False})
+# task_instance(add_task, task={'name': 'prepare lecture', 'is_done': False})
+# task_instance(add_task, task={'name': 'examination pending', 'is_done': False})
+# task_instance(add_task, task={'name': 'get some rest', 'is_done': True})
+#
+# task_instance(delete_task, task_name='examination pending')
+#
+# # print(task_instance(toggle_task_done, task_name='get some rest'))
+# # print(task_instance(toggle_task_done, task_name='get some rest'))
+# 
+# task_instance(filter_active_tasks)
+# task_instance(filter_completed_tasks)
+# # task_instance(mark_all_as_done)
+#
+# task_instance()
+# task_instance(clearing_done_tasks)
+# task_instance()
