@@ -7,6 +7,26 @@ def todo():
     return inner
 
 
+def filter_active_tasks(task_list):
+    new_task_list = []
+
+    for task_instance_ in task_list:
+        if not task_instance_['is_done']:
+            new_task_list.append(task_instance_)
+    print('Your active tasks: ')
+    return new_task_list
+
+
+def filter_completed_tasks(task_list):
+    done_task_list = []
+
+    for task_instance_ in task_list:
+        if task_instance_['is_done']:
+            done_task_list.append(task_instance_)
+    print('Your have completed these tasks: ')
+    return done_task_list
+
+
 def get_task(task_list, task_name):
     task = None
 
@@ -57,12 +77,13 @@ task_instance = todo()
 print(task_instance(add_task, task={'name': 'write paper', 'is_done': False}))
 print(task_instance(add_task, task={'name': 'prepare lecture', 'is_done': False}))
 print(task_instance(add_task, task={'name': 'examination pending', 'is_done': False}))
-print(task_instance(add_task, task={'name': 'get some rest', 'is_done': False}))
+print(task_instance(add_task, task={'name': 'get some rest', 'is_done': True}))
 
 print(task_instance(delete_task, task_name='examination pending'))
 
 print(task_instance(toggle_task_done, task_name='get some rest'))
 print(task_instance(toggle_task_done, task_name='get some rest'))
 
-print(task_instance(mark_all_as_done))
-
+print(task_instance(filter_active_tasks))
+print(task_instance(filter_completed_tasks))
+# print(task_instance(mark_all_as_done))
