@@ -45,6 +45,13 @@ def toggle_task_done(task_list, task_name):
     return task_list
 
 
+def mark_all_as_done(task_list):
+    for task_instance_ in task_list:
+        task_instance_['is_done'] = True
+
+    return task_list
+
+
 task_instance = todo()
 
 print(task_instance(add_task, task={'name': 'write paper', 'is_done': False}))
@@ -57,4 +64,5 @@ print(task_instance(delete_task, task_name='examination pending'))
 print(task_instance(toggle_task_done, task_name='get some rest'))
 print(task_instance(toggle_task_done, task_name='get some rest'))
 
+print(task_instance(mark_all_as_done))
 
